@@ -15,9 +15,11 @@ defmodule PhoenixRecipe.Router do
 
   scope "/", PhoenixRecipe do
     pipe_through :browser # Use the default browser stack
+    resources "/recipes", RecipeController
 
     get "/", PageController, :index
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", PhoenixRecipe do
