@@ -16,6 +16,12 @@
     <%= text_input f, :rdf, class: "form-control" %>
     <%= error_tag f, :rdf %>
   </div>
+  
+  <div class="form-group">
+    <%= label f, :rdf, class: "control-label" %>
+    <%= text_input f, :rdf, class: "form-control" %>
+    <%= error_tag f, :rdf %>
+  </div>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

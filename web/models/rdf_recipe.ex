@@ -12,3 +12,9 @@ defmodule RdfRecipe do
     field :name
   end
 end
+
+defimpl Phoenix.HTML.Safe, for: RdfRecipe do
+  def to_iodata(data) do
+    data
+  end
+end

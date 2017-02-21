@@ -3,8 +3,15 @@ defmodule Mix.Tasks.Import do
 
   @shortdoc "Runs the Import.say/1 command."
   def run(url) do
-    IO.puts "importing"
-    PhoenixRecipe.Webscrape.collect(url)
+    {:ok, ld} = PhoenixRecipe.Webscrape.collect(url)
+    changeset = PhoenixRecipe.Recipe.changeset(%PhoenixRecipe.Recipe{}, %{ name: "Imported", rdf: ld })
+    Mix.Task.run "app.start", []
+    case PhoenixRecipe.Repo.insert(changeset) do
+      {:ok, _recipe} ->
+        IO.puts "success"
+      {:error, changeset} ->
+        IO.inspect changeset
+    end
   end
 
   def run() do

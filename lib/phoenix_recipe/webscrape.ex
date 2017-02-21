@@ -5,8 +5,8 @@ defmodule PhoenixRecipe.Webscrape do
 
   def collect([url | _]) do
     {:ok, html} = download_page(url)
-    {:ok, ld} = extract_ld(html)
-    IO.puts "Got #{ld}"
+    {:ok, [ld]} = extract_ld(html)
+    {:ok, Poison.decode!(ld)}
   end
 
   defp extract_ld(html) do
