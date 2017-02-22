@@ -37,6 +37,8 @@ defmodule PhoenixRecipe.Endpoint do
     store: :cookie,
     key: "_phoenix_recipe_key",
     signing_salt: "LVDcRu2O"
+  plug PhoenixRecipe.RedirectsPlug, %{"/" => "/recipes"}
 
   plug PhoenixRecipe.Router
+
 end
