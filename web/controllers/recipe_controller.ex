@@ -5,6 +5,12 @@ defmodule PhoenixRecipe.RecipeController do
 
   def index(conn, _params) do
     recipes = Repo.all(Recipe)
+    case Phoenix.Controller.get_format(conn) do
+      "html" ->
+        render(conn, "index.html", recipes: recipes)
+      _ ->
+        render(conn, recipes: recipes)
+    end
     render(conn, "index.html", recipes: recipes)
   end
 

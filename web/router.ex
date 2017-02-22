@@ -2,7 +2,7 @@ defmodule PhoenixRecipe.Router do
   use PhoenixRecipe.Web, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -13,8 +13,27 @@ defmodule PhoenixRecipe.Router do
     plug :accepts, ["json"]
   end
 
+  defp content_negotiation(conn, opts) do
+    negotiate(conn, opts, Phoenix.Controller.get_format(conn))
+  end
+
+  defp negotiate(conn, opts, "html") do
+    conn
+    |> fetch_session(opts)
+    |> fetch_flash(opts)
+    |> protect_from_forgery(opts)
+  end
+  defp negotiate(conn, opts, _) do
+    conn
+  end
+
+  pipeline :default do
+    plug :accepts, ["html", "json"]
+    plug :content_negotiation
+  end
+
   scope "/", PhoenixRecipe do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :default
     resources "/recipes", RecipeController
   end
 
